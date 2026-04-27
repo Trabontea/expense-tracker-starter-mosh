@@ -22,14 +22,20 @@ This is an educational starter project from a Mosh Hamedani course. It **intenti
 
 **Stack:** React 19 + Vite + ESLint. Pure JavaScript (no TypeScript). No routing, no external state management, no backend/API — all data lives in local component state (no persistence).
 
-**Structure:** Essentially a single-component app. All logic and UI lives in `src/App.jsx`. `src/main.jsx` is just the React root mount.
+**Component tree:**
 
-**State in App.jsx:**
-- `transactions[]` — array of transaction objects `{ id, description, amount, type, category, date }`
-- Form field states: `description`, `amount`, `type`, `category`
-- Filter states: `filterType`, `filterCategory`
-- Derived: `totalIncome`, `totalExpenses`, `balance` computed inline from filtered transactions
+```
+App
+├── Summary
+├── TransactionForm
+└── TransactionList
+```
 
-**Known bugs (intentional):**
-- `amount` is stored as a string, not a number — causes incorrect string concatenation in the summary `reduce()` calls instead of numeric addition
-- Delete functionality is referenced in CSS but not implemented in JSX
+**State ownership:**
+- `App` — holds `transactions[]` (`{ id, description, amount, type, category, date }`) and the shared `categories[]` list; passes `onAdd` callback to `TransactionForm`
+- `Summary` — receives `transactions`, computes `totalIncome`, `totalExpenses`, and `balance` internally
+- `TransactionForm` — owns all form field state (`description`, `amount`, `type`, `category`); calls `onAdd` with the built transaction object on submit
+- `TransactionList` — owns filter state (`filterType`, `filterCategory`); receives `transactions` and `categories` to render the filtered table
+
+**Known issue (intentional):**
+- Delete functionality is referenced in CSS but not implemented
