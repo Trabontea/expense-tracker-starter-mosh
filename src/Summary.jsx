@@ -8,20 +8,27 @@ function Summary({ transactions }) {
     .reduce((sum, t) => sum + t.amount, 0);
 
   const balance = totalIncome - totalExpenses;
+  const isNegative = balance < 0;
+
+  const fmt = (n) =>
+    Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   return (
-    <div className="summary">
-      <div className="summary-card">
-        <h3>Income</h3>
-        <p className="income-amount">${totalIncome}</p>
-      </div>
-      <div className="summary-card">
-        <h3>Expenses</h3>
-        <p className="expense-amount">${totalExpenses}</p>
-      </div>
-      <div className="summary-card">
-        <h3>Balance</h3>
-        <p className="balance-amount">${balance}</p>
+    <div className={`summary summary--${isNegative ? 'negative' : 'positive'}`}>
+      <p className="summary-label">Current balance</p>
+      <p className="balance-amount">
+        {isNegative ? '−' : ''}${fmt(balance)}
+      </p>
+      <div className="summary-stats">
+        <div className="summary-stat">
+          <span className="summary-stat-label">Income</span>
+          <span className="income-amount">+${fmt(totalIncome)}</span>
+        </div>
+        <div className="summary-stat-divider" />
+        <div className="summary-stat">
+          <span className="summary-stat-label">Expenses</span>
+          <span className="expense-amount">−${fmt(totalExpenses)}</span>
+        </div>
       </div>
     </div>
   );

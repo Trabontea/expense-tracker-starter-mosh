@@ -49,7 +49,7 @@ function TransactionList({ transactions, categories, onDelete }) {
                 {t.type === 'income' ? '+' : '-'}${t.amount}
               </td>
               <td>
-                <button className="delete-btn" onClick={() => window.confirm('Delete this transaction?') && onDelete(t.id)}>Delete</button>
+                <button className="delete-btn" onClick={() => window.confirm('Delete this transaction?') && onDelete(t.id)}>×</button>
               </td>
             </tr>
           ))}
