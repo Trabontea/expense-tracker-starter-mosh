@@ -3,6 +3,7 @@ import './App.css';
 import Summary from './Summary';
 import TransactionForm from './TransactionForm';
 import TransactionList from './TransactionList';
+import SpendingChart from './SpendingChart';
 import { data } from './data';
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
 
       <Summary transactions={transactions} />
       <TransactionForm categories={categories} onAdd={handleAdd} />
+      <SpendingChart transactions={transactions} />
       <TransactionList transactions={transactions} categories={categories} onDelete={handleDelete} />
     </div>
   );
